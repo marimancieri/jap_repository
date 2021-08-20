@@ -28,11 +28,11 @@ function sortCategories(criteria, array){
 
             if ( aCount > bCount ){ return -1; }
             if ( aCount < bCount ){ return 1; }
-            return 0;
+            return 0;   
         });
     }
 
-    return result;
+    return result; // devuelve el array ordenado segun criterio indicado
 }
 
 function showCategoriesList(){
