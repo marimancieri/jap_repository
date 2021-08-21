@@ -13,7 +13,7 @@ var currentSortCriteria = undefined;
 var minPrice = undefined;
 var maxPrice = undefined;
 
-function sortCategories(criteria, array){// devuelve el array ordenado segun criterio indicado
+function sortProducts(criteria, array){// devuelve el array ordenado segun criterio indicado
     let result = [];
     if (criteria === ORDER_ASC_BY_NAME)
     {
@@ -80,7 +80,7 @@ function sortAndShowProd(sortCriteria, productsArray){ //une dos func. anteriore
         currentProductsArray = productsArray;
     }
     //ordeno productos
-    currentProductsArray = sortCategories(currentSortCriteria, currentProductsArray);
+    currentProductsArray = sortProducts(currentSortCriteria, currentProductsArray);
 
     //Muestro productos ordenadas
     showPoductsList();
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         sortAndShowProd(ORDER_DESC_BY_NAME);
     });
 
-    document.getElementById("sortByPice").addEventListener("click", function(){
+    document.getElementById("sortByPrice").addEventListener("click", function(){
         sortAndShowProd(ORDER_BY_PROD_PRICE);
     });
 
