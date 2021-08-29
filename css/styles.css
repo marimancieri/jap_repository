@@ -160,3 +160,9 @@ a.custom-card:hover {
   max-width: 100px;
   padding: 10px;
 }
+
+.nombre{
+  color:rgb(121,216,233);
+  font-weight: bold;
+  padding: 7px;
+}

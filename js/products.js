@@ -5,9 +5,9 @@
 
 // });
 
-const ORDER_ASC_BY_NAME = "AZ";
-const ORDER_DESC_BY_NAME = "ZA";
-const ORDER_BY_PROD_PRICE = "Price";
+const ORDER_ASC_BY_PRICE = "AZ";
+const ORDER_DES_BY_PRICE = "ZA";
+const ORDER_BY_RELEVANCE = "Relevance"; //orden decreciente
 var currentProductsArray = [];
 var currentSortCriteria = undefined;
 var minPrice = undefined;
@@ -15,23 +15,28 @@ var maxPrice = undefined;
 
 function sortProducts(criteria, array){// devuelve el array ordenado segun criterio indicado
     let result = [];
-    if (criteria === ORDER_ASC_BY_NAME)
-    {
-        result = array.sort(function(a, b) {
-            if ( a.name < b.name ){ return -1; }
-            if ( a.name > b.name ){ return 1; }
-            return 0;
-        });
-    }else if (criteria === ORDER_DESC_BY_NAME){
-        result = array.sort(function(a, b) {
-            if ( a.name > b.name ){ return -1; }
-            if ( a.name < b.name ){ return 1; }
-            return 0;
-        });
-    }else if (criteria === ORDER_BY_PROD_PRICE){
+    if (criteria === ORDER_ASC_BY_PRICE){
         result = array.sort(function(a, b) {
             let aPrice = parseInt(a.cost);
             let bPrice = parseInt(b.cost);
+
+            if ( aPrice < bPrice ){ return -1; }
+            if ( aPrice > bPrice ){ return 1; }
+            return 0;   
+        });
+    }else if (criteria === ORDER_DES_BY_PRICE){
+        result = array.sort(function(a, b) {
+            let aPrice = parseInt(a.cost);
+            let bPrice = parseInt(b.cost);
+
+            if ( aPrice > bPrice ){ return -1; }
+            if ( aPrice < bPrice ){ return 1; }
+            return 0;   
+        });
+    }else if (criteria === ORDER_BY_RELEVANCE){
+        result = array.sort(function(a, b) {
+            let aPrice = parseInt(a.soldCount);
+            let bPrice = parseInt(b.soldCount);
 
             if ( aPrice > bPrice ){ return -1; }
             if ( aPrice < bPrice ){ return 1; }
@@ -63,6 +68,9 @@ function showPoductsList(){ //insterta lista de productos en html
                             <small class="text-muted">` + product.currency +` `+ product.cost +` </small>
                         </div>
                         <p class="mb-1">` + product.description + `</p>
+                        <div class="d-flex w-100 justify-content-between">
+                            <small class="text-muted"> Vendidos: ` + product.soldCount +` </small>
+                        </div>
                     </div>
                 </div>
             </a>
@@ -92,20 +100,20 @@ function sortAndShowProd(sortCriteria, productsArray){ //une dos func. anteriore
 document.addEventListener("DOMContentLoaded", function(e){
     getJSONData(PRODUCTS_URL).then(function(resultObj){ //URL
         if (resultObj.status === "ok"){
-            sortAndShowProd(ORDER_ASC_BY_NAME, resultObj.data);
+            sortAndShowProd(ORDER_ASC_BY_PRICE, resultObj.data);
         }
     });
 
     document.getElementById("sortAsc").addEventListener("click", function(){
-        sortAndShowProd(ORDER_ASC_BY_NAME);
+        sortAndShowProd(ORDER_ASC_BY_PRICE);
     });
 
     document.getElementById("sortDesc").addEventListener("click", function(){
-        sortAndShowProd(ORDER_DESC_BY_NAME);
+        sortAndShowProd(ORDER_DES_BY_PRICE);
     });
 
     document.getElementById("sortByPrice").addEventListener("click", function(){
-        sortAndShowProd(ORDER_BY_PROD_PRICE);
+        sortAndShowProd(ORDER_BY_RELEVANCE);
     });
 
     document.getElementById("clearRangeFilter").addEventListener("click", function(){

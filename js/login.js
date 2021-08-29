@@ -1,6 +1,23 @@
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function(e){
 
-});
+function guardarInfo(){
+    localStorage.setItem('email', document.getElementById('email').value);
+    localStorage.setItem('contraseña', document.getElementById('contraseña').value);
+    mostrarNombre();
+}
+
+function borrarInfo(){
+    localStorage.clear();
+}
+
+function mostrarNombre(){
+    let email = localStorage.getItem("email");
+    let i = email.indexOf('@');
+    let nombre = email.slice(0,i);
+    
+    document.getElementById('info').innerHTML = nombre;
+    localStorage.setItem('nombre', nombre);
+}
+
+document.addEventListener("DOMContentLoaded", function(e){
+    mostrarNombre();
+})
