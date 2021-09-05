@@ -1,13 +1,8 @@
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
-// document.addEventListener("DOMContentLoaded", function (e) {
-
-// });
 
 const ORDER_ASC_BY_PRICE = "AZ";
 const ORDER_DES_BY_PRICE = "ZA";
 const ORDER_BY_RELEVANCE = "Relevance"; //orden decreciente
+const ORDER_BY_FILTER = "Filter";
 var currentProductsArray = [];
 var currentSortCriteria = undefined;
 var minPrice = undefined;
@@ -41,7 +36,9 @@ function sortProducts(criteria, array){// devuelve el array ordenado segun crite
             if ( aPrice > bPrice ){ return -1; }
             if ( aPrice < bPrice ){ return 1; }
             return 0;   
-        });
+        }); 
+    // }else if (criteria === ORDER_BY_FILTER){
+    //      result = buscar();
     }
 
     return result; // devuelve el array ordenado segun criterio indicado
@@ -94,6 +91,40 @@ function sortAndShowProd(sortCriteria, productsArray){ //une dos func. anteriore
     showPoductsList();
 }
 
+function buscar(){
+    var input = document.getElementById("buscador").value;
+    var filtro = input.toUpperCase();
+    console.log("filtro="+filtro);
+    let result = [];
+    
+    for (i = 0; i< currentProductsArray.length; i++){
+        var titulo = currentProductsArray[i].name.toUpperCase();
+        //console.log("titulo="+titulo)
+        //var description = currentProductsArray[i].description;
+        // if (titulo.indexOf(filtro) !== -1){
+        //     console.log("1");
+        //     result.push(currentProductsArray[i]);
+        //     console.log("result="+result);
+        // }
+        // else{
+        //     console.log("no esta")
+        // }
+        if (titulo.includes(filtro)){
+            result.push(currentProductsArray[i])
+            console.log("result="+result);
+
+        }
+        else{
+            console.log("no esta");
+        }
+
+        
+        
+    }
+    //return result
+
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -112,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         sortAndShowProd(ORDER_DES_BY_PRICE);
     });
 
-    document.getElementById("sortByPrice").addEventListener("click", function(){
+    document.getElementById("sortByRelevance").addEventListener("click", function(){
         sortAndShowProd(ORDER_BY_RELEVANCE);
     });
 
@@ -148,4 +179,7 @@ document.addEventListener("DOMContentLoaded", function(e){
 
         showPoductsList();
     });
+
+    // document.getElementById("buscador").addEventListener("keyup", (e) => {
+        
 });
