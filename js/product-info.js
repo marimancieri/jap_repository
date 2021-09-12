@@ -25,6 +25,47 @@ function showImagesGallery(array){
     }
 }
 
+function showComents(comentArray){
+    let htmlContentToAppend = "";
+
+    for(let i = 0; i < comentArray.length; i++){
+        let comentario = comentArray[i];
+
+        htmlContentToAppend += `
+                <div>
+                    <div class="show-comentario">
+                        <div>
+                            <p id="com-user">` + comentario.user + `</p>
+                            <p id="com-score">` + comentario.score + `</p>
+                        </div>
+                        <div id="com-description">` + comentario.description + `</div>
+                        <div id="com-dateTime">` + comentario.dateTime + `</div>
+                        
+
+                    </div>
+                </div>
+                `    
+
+
+        // htmlContentToAppend += `
+        //         <div class="row">
+        //             <div class="col">
+        //                 <dt>` + comentario.user + `</dt>
+        //                 <dd>
+        //                 <p>` + comentario.description + `</p>
+        //                 <p>` + comentario.dateTime + `</p>
+        //                 <p>` + comentario.score + `</p>
+
+        //                 </dd>
+        //             </div>
+        //         </div>
+        //         `
+
+        document.getElementById("comentarios").innerHTML = htmlContentToAppend;
+    }
+
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -37,20 +78,24 @@ document.addEventListener("DOMContentLoaded", function(e){
             let productNameHTML  = document.getElementById("productName");
             let productDescriptionHTML = document.getElementById("productDescription");
             let productCostHTML = document.getElementById("productCost");
-            let productCurrencyHTML = document.getElementById("productCurrency");
             let productSoldCountHTML = document.getElementById("productSoldCount");
-            let productCategoryHTML = document.getElementById("productCategory");
-            //let productCriteriaHTML = document.getElementById("productCriteria");
         
             productNameHTML.innerHTML = product.name;
             productDescriptionHTML.innerHTML = product.description;
-            productCostHTML.innerHTML = product.cost;
-            productCurrencyHTML.innerHTML = product.currency;
+            productCostHTML.innerHTML = product.currency + " " + product.cost;
             productSoldCountHTML.innerHTML = product.soldCount;
-            //productCriteriaHTML.innerHTML = category.productCriteria;
 
             //Muestro las imagenes en forma de galería
-            showImagesGallery(category.images);
+            showImagesGallery(product.images);
+            
+        }
+    });
+    getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(resultObj){
+        if (resultObj.status === "ok")
+        {
+            comentarios = resultObj.data;
+
+            showComents(comentarios);
         }
     });
 });

@@ -7,6 +7,7 @@ var currentProductsArray = [];
 var currentSortCriteria = undefined;
 var minPrice = undefined;
 var maxPrice = undefined;
+var searchArray = [];
 
 function sortProducts(criteria, array){// devuelve el array ordenado segun criterio indicado
     let result = [];
@@ -37,45 +38,58 @@ function sortProducts(criteria, array){// devuelve el array ordenado segun crite
             if ( aPrice < bPrice ){ return 1; }
             return 0;   
         }); 
-    // }else if (criteria === ORDER_BY_FILTER){
-    //      result = buscar();
     }
 
     return result; // devuelve el array ordenado segun criterio indicado
 }
 
-function showPoductsList(){ //insterta lista de productos en html
+function showPoductsList(arrayToShow){ //insterta lista de productos en html
+    if(arrayToShow == undefined){
+        arrayToShow = currentProductsArray;
+    }
 
     let htmlContentToAppend = "";
-    for(let i = 0; i < currentProductsArray.length; i++){
-        let product = currentProductsArray[i];
+    if(arrayToShow.length != 0){
+        for(let i = 0; i < arrayToShow.length; i++){
+            let product = arrayToShow[i];
 
-        if (((minPrice == undefined) || (minPrice != undefined && parseInt(product.cost) >= minPrice)) &&
-            ((maxPrice == undefined) || (maxPrice != undefined && parseInt(product.cost) <= maxPrice))){
+            if (((minPrice == undefined) || (minPrice != undefined && parseInt(product.cost) >= minPrice)) &&
+                ((maxPrice == undefined) || (maxPrice != undefined && parseInt(product.cost) <= maxPrice))){
 
-            htmlContentToAppend += `
-            <a href="product-info.html" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">`+ product.name +`</h4>
-                            <small class="text-muted">` + product.currency +` `+ product.cost +` </small>
+                htmlContentToAppend += `
+                <a href="product-info.html" class="list-group-item list-group-item-action">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
                         </div>
-                        <p class="mb-1">` + product.description + `</p>
-                        <div class="d-flex w-100 justify-content-between">
-                            <small class="text-muted"> Vendidos: ` + product.soldCount +` </small>
+                        <div class="col">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h4 class="mb-1">`+ product.name +`</h4>
+                                <small class="text-muted">` + product.currency +` `+ product.cost +` </small>
+                            </div>
+                            <p class="mb-1">` + product.description + `</p>
+                            <div class="d-flex w-100 justify-content-between">
+                                <small class="text-muted"> Vendidos: ` + product.soldCount +` </small>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
-            `
+                </a>
+                `
+            }
         }
-
-        document.getElementById("prod-list-container").innerHTML = htmlContentToAppend; //traigo el id de products.html
     }
+    else{
+        htmlContentToAppend += `
+        <div class="row">
+            <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1"> No se encontraron porductos </h5>
+            </div>
+        </div>
+    `
+    }
+
+    document.getElementById("prod-list-container").innerHTML = htmlContentToAppend; //traigo el id de products.html
+    
 } 
 
 function sortAndShowProd(sortCriteria, productsArray){ //une dos func. anteriores
@@ -94,35 +108,14 @@ function sortAndShowProd(sortCriteria, productsArray){ //une dos func. anteriore
 function buscar(){
     var input = document.getElementById("buscador").value;
     var filtro = input.toUpperCase();
-    console.log("filtro="+filtro);
-    let result = [];
-    
-    for (i = 0; i< currentProductsArray.length; i++){
-        var titulo = currentProductsArray[i].name.toUpperCase();
-        //console.log("titulo="+titulo)
-        //var description = currentProductsArray[i].description;
-        // if (titulo.indexOf(filtro) !== -1){
-        //     console.log("1");
-        //     result.push(currentProductsArray[i]);
-        //     console.log("result="+result);
-        // }
-        // else{
-        //     console.log("no esta")
-        // }
-        if (titulo.includes(filtro)){
-            result.push(currentProductsArray[i])
-            console.log("result="+result);
-
-        }
-        else{
-            console.log("no esta");
-        }
-
+    //console.log("filtro="+filtro);
+    searchArray = currentProductsArray.filter(product => {
+        return product.name.toUpperCase().indexOf(filtro)> -1;
+    })
+    //console.log(searchArray);
+    showPoductsList(searchArray);
         
         
-    }
-    //return result
-
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
@@ -180,6 +173,8 @@ document.addEventListener("DOMContentLoaded", function(e){
         showPoductsList();
     });
 
-    // document.getElementById("buscador").addEventListener("keyup", (e) => {
+    document.getElementById("buscador").addEventListener("keyup", () => {
+        buscar();
+    });
         
 });

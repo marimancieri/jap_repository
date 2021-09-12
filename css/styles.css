@@ -161,8 +161,36 @@ a.custom-card:hover {
   padding: 10px;
 }
 
+#buscador{
+  margin: 10px;
+}
+
 .nombre{
   color:rgb(121,216,233);
   font-weight: bold;
   padding: 7px;
+}
+
+#com-user{
+  font-weight: bold;
+  
+}
+
+#com-description{
+  background-color: aqua;
+}
+
+#com-dateTime{
+  color:gray;
+  font-size: small;
+}
+
+#com-score{
+  text-align: right;
+}
+
+.show-comentario{
+  background-color:rgba(18, 108, 233, 0.361);
+  padding: 10px;
+  margin: 5px;
 }
