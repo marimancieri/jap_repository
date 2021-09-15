@@ -9,7 +9,7 @@ function guardarInfo(){
 
 
 document.addEventListener("DOMContentLoaded", function(e){
-    if (localStorage.getItem("email")== null){ //si hay un usuario logeado me lleva al home
+    if (localStorage.getItem("email")!= null){ //si hay un usuario logeado me lleva al home
         window.location.href=URL_HOME;
     }
 })
