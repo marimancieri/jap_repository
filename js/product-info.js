@@ -25,6 +25,48 @@ function showImagesGallery(array){
     }
 }
 
+function stars(score){
+    let starsTo = "";
+    if (score==1){
+        starsTo = ` <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star "></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>`
+    }else if (score==2){
+        starsTo = ` <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star "></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>`
+    }else if (score==3){
+        starsTo = ` <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star cheked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>`
+    }else if (score==4){
+        starsTo = ` <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>`
+    }else if(score==5){
+        starsTo = ` <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>`
+    }else{
+        starsTo = ` <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>`
+    }
+    return starsTo;
+}
+
 function showComents(comentArray){
     let htmlContentToAppend = "";
 
@@ -36,7 +78,7 @@ function showComents(comentArray){
                     <div class="show-comentario">
                         <div>
                             <p id="com-user">` + comentario.user + `</p>
-                            <p id="com-score">` + comentario.score + `</p>
+                            <div id="com-score">` + stars(comentario.score) + `</div>
                         </div>
                         <div id="com-description">` + comentario.description + `</div>
                         <div id="com-dateTime">` + comentario.dateTime + `</div>
@@ -45,22 +87,6 @@ function showComents(comentArray){
                     </div>
                 </div>
                 `    
-
-
-        // htmlContentToAppend += `
-        //         <div class="row">
-        //             <div class="col">
-        //                 <dt>` + comentario.user + `</dt>
-        //                 <dd>
-        //                 <p>` + comentario.description + `</p>
-        //                 <p>` + comentario.dateTime + `</p>
-        //                 <p>` + comentario.score + `</p>
-
-        //                 </dd>
-        //             </div>
-        //         </div>
-        //         `
-
         document.getElementById("comentarios").innerHTML = htmlContentToAppend;
     }
 
