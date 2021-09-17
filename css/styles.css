@@ -176,9 +176,9 @@ a.custom-card:hover {
   
 }
 
-#com-description{
-  background-color: aqua;
-}
+/* #com-description{ 
+   background-color: aqua; 
+ } */
 
 #com-dateTime{
   color:gray;
@@ -190,7 +190,14 @@ a.custom-card:hover {
 }
 
 .show-comentario{
-  background-color:rgba(18, 108, 233, 0.361);
+  /* background-color:rgba(18, 108, 233, 0.361); */
   padding: 10px;
+  margin: 5px;
+  border-style:solid;
+  border-width: 0.5px;
+  
+}
+
+#form-comentario{
   margin: 5px;
 }

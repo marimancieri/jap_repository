@@ -5,6 +5,7 @@
 
 // });
 var category = {};
+comentarios = [];
 
 function showImagesGallery(array){
 
@@ -42,7 +43,7 @@ function stars(score){
     }else if (score==3){
         starsTo = ` <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star cheked"></span>
+                    <span class="fa fa-star checked"></span>
                     <span class="fa fa-star"></span>
                     <span class="fa fa-star"></span>`
     }else if (score==4){
@@ -92,6 +93,21 @@ function showComents(comentArray){
 
 }
 
+function addComent(){
+
+    let nuevoComent = {};
+    nuevoComent.user = localStorage.getItem("nombre");
+    nuevoComent.description = document.getElementById("nuevoComentario").value;
+    nuevoComent.score = document.getElementById("puntaje").value;
+    
+    console.log(nuevoComent);
+
+    // comentarios.push(nuevoComent);
+    // showComents(comentarios);
+   
+
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -124,4 +140,8 @@ document.addEventListener("DOMContentLoaded", function(e){
             showComents(comentarios);
         }
     });
+
+    // document.getElementById("enviarComentario").addEventListener("click", function(){
+    //     addComent();
+    // });
 });
