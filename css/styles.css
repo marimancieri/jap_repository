@@ -171,35 +171,32 @@ a.custom-card:hover {
   padding: 7px;
 }
 
-
 #com-user{
   font-weight: bold;
-
-  
 }
 
-/* #com-description{ 
-   background-color: aqua; 
- } */
 
 #com-dateTime{
   color:gray;
-  font-size: small;
+  font-size:x-small;
+  
 }
 
 #com-score{
   text-align: right;
 }
 
-.show-comentario{
-  /* background-color:rgba(18, 108, 233, 0.361); */
-  padding: 10px;
-  margin: 5px;
-  border-style:solid;
-  border-width: 0.5px;
-  
+#form-comentario{
+  margin: 0px;
 }
 
-#form-comentario{
+.nuevoComent{
+  padding: 0.1;
+
+}
+.form-control{
+  margin: 5px;
+}
+#puntaje{
   margin: 5px;
 }

@@ -1,9 +1,4 @@
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
-// document.addEventListener("DOMContentLoaded", function(e){
 
-// });
 var category = {};
 var comentarios = [];
 
@@ -46,10 +41,13 @@ function showComents(comentArray){
         let comentario = comentArray[i];
 
         htmlContentToAppend += `
-                <div>
-                    <div class="show-comentario">
-                        <div id="com-user-score">
-                            <p id="com-user">` + comentario.user + stars(comentario.score)  + `</p>
+            <div class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <p id="mb1" style="font-weight: bold">` + comentario.user + `</p>
+                            <p>` + stars(comentario.score)  + `</p>
+                            
                             
                         </div>
                         <div id="com-description">` + comentario.description + `</div>
@@ -58,31 +56,29 @@ function showComents(comentArray){
 
                     </div>
                 </div>
-                `    
+            </div>`    
         document.getElementById("comentarios").innerHTML = htmlContentToAppend;
     }
 
 }
 
 function addComent(){
-    console.log("comentarios" + comentarios)
+    
     const fecha = new(Date);
-    const options = {year: "numeric",month:"numeric",day:"numeric",hour:"numeric",minute:"numeric",second:"numeric",hour12:"false"};
-    let nuevaFecha = Intl.DateTimeFormat('en-CA',options).format(fecha);
+    let nuevaFecha = fecha.getFullYear() + "-" + (fecha.getMonth()+1) + "-" + fecha.getDate() + " " + fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds(); 
 
     let nuevoComent = {};
+
     nuevoComent.user = localStorage.getItem("nombre");
     nuevoComent.description = document.getElementById("nuevoComentario").value;
     nuevoComent.score = document.getElementById("puntaje").value;
     nuevoComent.dateTime = nuevaFecha;
  
-    console.log(nuevoComent);
     comentarios.push(nuevoComent);
-    console.log("comentarios.push" + comentarios);
     showComents(comentarios);
 
     document.getElementById("nuevoComentario").value=""; //vacia text area
-    document.getElementById("puntaje").value=1; 
+    document.getElementById("puntaje").value=1;  //resete puntuación
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
@@ -118,7 +114,5 @@ document.addEventListener("DOMContentLoaded", function(e){
         }
     });
 
-    // document.getElementById("enviarComentario").addEventListener("click", function(){
-    //     addComent();
-    // });
+    
 });
