@@ -72,14 +72,19 @@
         <dd>
           <form id="form-comentario">
             <textarea placeholder="Ingrese su comentario" row="4" class="form-control" id="nuevoComentario" ></textarea>
-            <select name="puntaje" id="puntaje">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            <button type="submit" id= "enviarComentario" onclick="addComent()">Enviar</button>
+            <div>
+              <p style="padding: 0%;">Puntuación:</p>
+              <select name="puntaje" id="puntaje">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            
+          </br></br>
+            <button type="button" id= "enviarComentario" onclick="addComent()">Enviar</button>
           </form>
         </dd>
 

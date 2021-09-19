@@ -5,7 +5,7 @@
 
 // });
 var category = {};
-comentarios = [];
+var comentarios = [];
 
 function showImagesGallery(array){
 
@@ -28,42 +28,13 @@ function showImagesGallery(array){
 
 function stars(score){
     let starsTo = "";
-    if (score==1){
-        starsTo = ` <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star "></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>`
-    }else if (score==2){
-        starsTo = ` <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star "></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>`
-    }else if (score==3){
-        starsTo = ` <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>`
-    }else if (score==4){
-        starsTo = ` <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>`
-    }else if(score==5){
-        starsTo = ` <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>`
-    }else{
-        starsTo = ` <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>`
+    for(let i = 1; i<=5; i++){
+        if(i<=score){
+            starsTo += ` <span class="fa fa-star checked"></span>`
+        }
+        else{
+            starsTo += ` <span class="far fa-star"></span>`
+        }
     }
     return starsTo;
 }
@@ -77,9 +48,9 @@ function showComents(comentArray){
         htmlContentToAppend += `
                 <div>
                     <div class="show-comentario">
-                        <div>
-                            <p id="com-user">` + comentario.user + `</p>
-                            <div id="com-score">` + stars(comentario.score) + `</div>
+                        <div id="com-user-score">
+                            <p id="com-user">` + comentario.user + stars(comentario.score)  + `</p>
+                            
                         </div>
                         <div id="com-description">` + comentario.description + `</div>
                         <div id="com-dateTime">` + comentario.dateTime + `</div>
@@ -94,18 +65,24 @@ function showComents(comentArray){
 }
 
 function addComent(){
+    console.log("comentarios" + comentarios)
+    const fecha = new(Date);
+    const options = {year: "numeric",month:"numeric",day:"numeric",hour:"numeric",minute:"numeric",second:"numeric",hour12:"false"};
+    let nuevaFecha = Intl.DateTimeFormat('en-CA',options).format(fecha);
 
     let nuevoComent = {};
     nuevoComent.user = localStorage.getItem("nombre");
     nuevoComent.description = document.getElementById("nuevoComentario").value;
     nuevoComent.score = document.getElementById("puntaje").value;
-    
+    nuevoComent.dateTime = nuevaFecha;
+ 
     console.log(nuevoComent);
+    comentarios.push(nuevoComent);
+    console.log("comentarios.push" + comentarios);
+    showComents(comentarios);
 
-    // comentarios.push(nuevoComent);
-    // showComents(comentarios);
-   
-
+    document.getElementById("nuevoComentario").value=""; //vacia text area
+    document.getElementById("puntaje").value=1; 
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
@@ -129,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function(e){
 
             //Muestro las imagenes en forma de galería
             showImagesGallery(product.images);
-            
+  
         }
     });
     getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(resultObj){
