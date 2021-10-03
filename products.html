@@ -8,6 +8,7 @@
     <title>eMercado - Todo lo que busques está aquí</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -15,16 +16,28 @@
     
   </head>
   <body>
-    <nav class="site-header sticky-top py-1 bg-dark">
-      <div class="container d-flex flex-column flex-md-row justify-content-between">
-        <a class="py-2 d-none d-md-inline-block" href="home.html">Inicio</a>
-        <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
-        <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-        <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-        <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
-        <a class="py-2 d-none d-md-inline-block" href="index.html" onclick="borrarInfo()">Salir</a>
-        <p class="nombre" id='info'>Usuario</p>
+    <nav class="navbar navbar-dark bg-dark" >
+      <div class="container-fluid">
+        
+          <a class="navbar-brand" href="home.html"><img src="img/LogoJaP.png"alt="" width="50" height="30" class="d-inline-block align-text-top"></a>
+          <a class="navbar-brand" href="categories.html">Categorías</a>
+          <a class="navbar-brand" href="products.html">Productos</a>
+          <a class="navbar-brand" href="sell.html">Vender</a>
+          
+          <div class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="img/default-avatar.png" alt="" width="24" height="24" class="d-inline-block align-text-top">
+            </a>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+              <li><a class="dropdown-item" href="my-profile.html"id='info'>Usuario</a></li>
+              <li><a class="dropdown-item" href="index.html" onclick="borrarInfo()">Salir</a></li>
+            </ul>
+          </div>
+        
       </div>
+    
     </nav>
 
     <!-- <div class="container p-5">
@@ -107,5 +120,7 @@
     <script src="js/init.js"></script>
     <script src="js/products.js"></script>
     <script src='js/my-profile.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
   </body>
 </html>

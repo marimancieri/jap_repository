@@ -200,3 +200,6 @@ a.custom-card:hover {
 #puntaje{
   margin: 5px;
 }
+.card-columns {
+  display: inline-block;
+}

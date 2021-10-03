@@ -8,14 +8,19 @@ function showImagesGallery(array){
 
     for(let i = 0; i < array.length; i++){
         let imageSrc = array[i];
-
-        htmlContentToAppend += `
-        <div class="col-lg-3 col-md-4 col-6">
-            <div class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="` + imageSrc + `" alt="">
+        if (i==0){
+            htmlContentToAppend += `
+            <div class="carousel-item active">
+                <img src="` + imageSrc + `" class="d-block w-100" alt="...">
             </div>
-        </div>
-        `
+            `
+            
+        }else{
+        htmlContentToAppend += `
+        <div class="carousel-item">
+            <img src="` + imageSrc + `" class="d-block w-100" alt="...">
+        </div>`
+        }
 
         document.getElementById("productImagesGallery").innerHTML = htmlContentToAppend;
     }
@@ -81,10 +86,42 @@ function addComent(){
     document.getElementById("puntaje").value=1;  //resete puntuación
 }
 
+function ShowProductosRelacionados(arrayProductos){
+    let ProdRelacToAppend = "";
+
+    for (let i=0; i < product.relatedProducts.length; i++){
+        let prodRelac = arrayProductos[product.relatedProducts[i]];
+
+        ProdRelacToAppend +=`
+        
+
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="` + prodRelac.imgSrc + `" alt="Card image">
+            <div class="card-body">
+                <h5 class="card-title">`+ prodRelac.name +`</h5>
+                <p class="card-text">` + prodRelac.currency +` `+ prodRelac.cost +`</p>
+                <a href="product-info.html" class="btn btn-dark">Ver</a>
+            </div>
+        </div>
+        `
+        //el link va a llevar a la misma pag xq hay solo info de un porducto. 
+
+        
+        document.getElementById("ProductosRelacionados").innerHTML = ProdRelacToAppend;
+    }
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 document.addEventListener("DOMContentLoaded", function(e){
+    getJSONData(PRODUCTS_URL).then(function(resultObjProd){
+        if (resultObjProd.status === "ok")
+        {
+            arrayProduct = resultObjProd.data;
+            
+        }
+    });
     getJSONData(PRODUCT_INFO_URL).then(function(resultObj){
         if (resultObj.status === "ok")
         {
@@ -100,19 +137,27 @@ document.addEventListener("DOMContentLoaded", function(e){
             productCostHTML.innerHTML = product.currency + " " + product.cost;
             productSoldCountHTML.innerHTML = product.soldCount;
 
+            // let arrayRelatedProducts = product.relatedProducts;
+
             //Muestro las imagenes en forma de galería
             showImagesGallery(product.images);
+            //Muestro porductos relacionados
+            ShowProductosRelacionados(arrayProduct);
+           
   
         }
     });
-    getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(resultObj){
-        if (resultObj.status === "ok")
+    
+    getJSONData(PRODUCT_INFO_COMMENTS_URL).then(function(resultObjComent){
+        if (resultObjComent.status === "ok")
         {
-            comentarios = resultObj.data;
+            comentarios = resultObjComent.data;
 
             showComents(comentarios);
         }
     });
+    
+    
 
     
 });
