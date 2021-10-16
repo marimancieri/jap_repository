@@ -203,3 +203,6 @@ a.custom-card:hover {
 .card-columns {
   display: inline-block;
 }
+.row{
+  margin: 5px;
+}

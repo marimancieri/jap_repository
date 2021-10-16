@@ -62,15 +62,56 @@
   <main role="main" class="pb-5">
     <div class="text-center p-4">
         <h2>Carrito</h2>
-        <!-- <p class="lead">Verás aquí todos los productos.</p> -->
     </div>
     <div class="container">
       <div class="row">
-        <div class="list-group" id="prodCarrito"> 
+        <div class="list-group-item" id="prodCarrito"> 
+          
           <!--aca pone los productos que estan en el carrito, los pasan desde cart.js -->
         </div>
       </div>
+
+      <div class="row">
+        <div class="list-group" id="opcEnvio"> 
+            <div class="list-group-item list-group-item-action">
+              <div class="row">
+                <p>Aca van las opciones de envio</p>
+                <!--  hacer! -->
+              </div>
+            </div> 
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="list-group" id="resumen"> 
+         
+              <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                  <div>
+                    <h6 class="my-0">Subtotal</h6>
+                    <!-- <small class="text-muted">Unitario del producto</small> -->
+                  </div>
+                  <span class="text-muted" id="subtotal">-</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                  <div>
+                    <h6 class="my-0">Costo de Envio</h6>
+                    <!-- <small class="text-muted">Según el tipo de publicación</small> -->
+                  </div>
+                  <span class="text-muted" id="costoDeEnvio">-</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Total (UYU)</span>
+                  <strong id="totalCarrito">-</strong>
+                </li>
+              </ul>
+            </div> 
+        </div>
+      </div>
+
+
     </div>
+    
 </main>
 
 <footer class="text-muted bg-light">
