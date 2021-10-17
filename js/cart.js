@@ -7,12 +7,14 @@ function upDatePrecio(cant,precio,indice){
 
     document.getElementById("totalProd"+indice).innerHTML = precioFinal;
 
-    arrayCarrito[indice].count =cant;
-    let subtotalCarrito = 0;
+    arrayCarrito[indice].count = cant;
+    
+    subtotalCarrito = 0;
     for (i=0;i<arrayCarrito.length; i++){
         subtotalCarrito += arrayCarrito[i].count*arrayCarrito[i].unitCost;
     }
     document.getElementById("subtotal").innerHTML = subtotalCarrito;
+    document.getElementById("totalCarrito").innerHTML = subtotalCarrito; //+costo de envio (PROX ENTREGA)
     
 }
 
@@ -32,30 +34,39 @@ function mostrarCarrito(array){
                 <img src="` + producto.src + `" alt="` + producto.name + `" class="img-thumbnail">
             </div>
             <div class="col">
-                <div class="d-flex w-100 justify-content-between">
-                    <h4 class="mb-1">`+ producto.name +`</h4>
-                    
+                <div class="row">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h4 class="mb-1">`+ producto.name +`</h4>
+                    </div>
                 </div>
-                <div class="d-flex w-100 justify-content-between">
-                    <small class="text-muted">Precio Unitario: UYU `+ producto.unitCost +` </small>
+                <div class="row">
+                    <div class="col">
+                        <small class="text-muted">Precio Unitario: </small>
+                        <h4>UYU `+ producto.unitCost +`</h4>
+                    </div>
+                    <div class="col">
+                    <small class="text-muted">Cantidad: </small>
                     <input type="number" class="form-control" min="0" id="cantidad`+i+`" 
                         value="`+producto.count+`" onChange="upDatePrecio(this.value,`+producto.unitCost+`,`+i+`)">
                 </div>
-                <div class="d-flex w-100 justify-content-between">
-                    <small class="text-muted">Total producto: </small>
-                    <h4  id="totalProd`+i+`">`+producto.count*producto.unitCost+`</h4>
-                    
+                
+                    <div class="col">
+                        <small class="text-muted">Total producto: </small>
+                        <h4  id="totalProd`+i+`">`+producto.count*producto.unitCost+`</h4>
+                    </div>
                 </div>
             </div>
         </div>`
 
         subtotalCarrito += producto.count*producto.unitCost;
+        totalCarrito = subtotalCarrito; //+ costo de envio (PROX ENTREGA)
 
         
     }
     
     document.getElementById("prodCarrito").innerHTML=carrito;
     document.getElementById("subtotal").innerHTML=subtotalCarrito;
+    document.getElementById("totalCarrito").innerHTML=totalCarrito;
 }
 
 
