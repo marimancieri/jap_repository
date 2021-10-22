@@ -1,6 +1,4 @@
-//Función que se ejecuta una vez que se haya lanzado el evento de
-//que el documento se encuentra cargado, es decir, se encuentran todos los
-//elementos HTML presentes.
+let mail = "";
 
 function mostrarNombre(){
     let email = localStorage.getItem("email");
@@ -15,6 +13,7 @@ function usuarioLogeado(){
     var URL_INDEX = "index.html";
     if (localStorage.getItem("email")!= null){
         mostrarNombre();
+        mail = localStorage.getItem("email");
     }else{
         window.location.href=URL_INDEX;
     }
@@ -26,4 +25,6 @@ function borrarInfo(){
 
 document.addEventListener("DOMContentLoaded", function (e) {
  usuarioLogeado();
+ 
+ document.getElementById("mail").value = mail;
 });
