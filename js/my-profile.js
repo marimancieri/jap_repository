@@ -23,6 +23,20 @@ function borrarInfo(){
     localStorage.clear();
 }
 
+function guardar(){
+    let usuario = {};
+
+    usuario.nombre = document.getElementById('userName').value;
+    usuario.apellido = document.getElementById('userLastName').value;
+    usuario.edad = document.getElementById('age').value;
+    usuario.mail = document.getElementById('mail').value;
+    usuario.telefono = document.getElementById('tel').value;
+    // usuario.imagen = document.getElementById('foto').value;
+
+    localStorage.setItem('user',JSON.stringify(usuario));
+
+}
+
 document.addEventListener("DOMContentLoaded", function (e) {
  usuarioLogeado();
  
