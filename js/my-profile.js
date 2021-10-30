@@ -1,5 +1,6 @@
 let mail = "";
 
+
 function mostrarNombre(){
     let email = localStorage.getItem("email");
     let i = email.indexOf('@');
@@ -14,6 +15,7 @@ function usuarioLogeado(){
     if (localStorage.getItem("email")!= null){
         mostrarNombre();
         mail = localStorage.getItem("email");
+        
     }else{
         window.location.href=URL_INDEX;
     }
@@ -23,6 +25,35 @@ function borrarInfo(){
     localStorage.clear();
 }
 
+function mostrarImagen(){
+    let preview = document.getElementById("imgUsuario2");
+    let file = document.querySelector("input[type=file]").files[0]; 
+    let reader = new FileReader();
+
+    reader.onloadend = function () { 
+        preview.src = reader.result; 
+        document.getElementById("imgUsuario2").innerHTML = reader.result; 
+    };
+
+    if (file) {
+        reader.readAsDataURL(file);
+       
+      } else {
+        preview.src = "img/default-avatar.png";
+      }
+
+}
+
+function mostrarDatos(){
+    let usuario = JSON.parse(localStorage.getItem("user"));
+
+    document.getElementById('userName').value = usuario.nombre; 
+    document.getElementById('userLastName').value = usuario.apellido; 
+    document.getElementById('age').value = usuario.edad; 
+    document.getElementById('mail').value = usuario.mail;
+    document.getElementById('tel').value = usuario.telefono;
+    document.getElementById("imgUsuario2").src = usuario.imagen;
+}
 function guardar(){
     let usuario = {};
 
@@ -31,7 +62,7 @@ function guardar(){
     usuario.edad = document.getElementById('age').value;
     usuario.mail = document.getElementById('mail').value;
     usuario.telefono = document.getElementById('tel').value;
-    // usuario.imagen = document.getElementById('foto').value;
+    usuario.imagen = document.getElementById("imgUsuario2").src;
 
     localStorage.setItem('user',JSON.stringify(usuario));
 
@@ -39,6 +70,8 @@ function guardar(){
 
 document.addEventListener("DOMContentLoaded", function (e) {
  usuarioLogeado();
+ mostrarDatos();
  
  document.getElementById("mail").value = mail;
+ 
 });
