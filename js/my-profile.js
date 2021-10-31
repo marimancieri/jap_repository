@@ -50,7 +50,7 @@ function mostrarDatos(){
     document.getElementById('userName').value = usuario.nombre; 
     document.getElementById('userLastName').value = usuario.apellido; 
     document.getElementById('age').value = usuario.edad; 
-    document.getElementById('mail').value = usuario.mail;
+    document.getElementById('mail').value = mail;
     document.getElementById('tel').value = usuario.telefono;
     document.getElementById("imgUsuario2").src = usuario.imagen;
 }
@@ -60,7 +60,7 @@ function guardar(){
     usuario.nombre = document.getElementById('userName').value;
     usuario.apellido = document.getElementById('userLastName').value;
     usuario.edad = document.getElementById('age').value;
-    usuario.mail = document.getElementById('mail').value;
+    usuario.mail = mail; //porque lo tengo guardado del login
     usuario.telefono = document.getElementById('tel').value;
     usuario.imagen = document.getElementById("imgUsuario2").src;
 
@@ -70,8 +70,9 @@ function guardar(){
 
 document.addEventListener("DOMContentLoaded", function (e) {
  usuarioLogeado();
- mostrarDatos();
+ 
  
  document.getElementById("mail").value = mail;
+ mostrarDatos();
  
 });
