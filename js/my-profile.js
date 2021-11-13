@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
  usuarioLogeado();
  
  
- document.getElementById("mail").value = mail;
+document.getElementById("mail").value = mail;
  mostrarDatos();
  
 });

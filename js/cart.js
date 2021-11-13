@@ -1,6 +1,28 @@
 let subtotalCarrito = 0;
 let totalCarrito = 0;
+let costoEnvio = 0;
 
+PRODUCT_PAGE = "products.html";
+
+function upDateEnvio(){
+    let tipoEnvio = document.getElementsByName('envioType');
+
+    for (let i = 0; i < tipoEnvio.length; i++) {
+        if (tipoEnvio[i].checked) {
+            if(i == 0){
+                costoEnvio = subtotalCarrito*0.15;
+            }
+            else if(i == 1){
+                costoEnvio = subtotalCarrito*0.07;
+            }
+            else if(i == 2){
+                costoEnvio = subtotalCarrito*0.05;
+            }
+        }
+    }
+    document.getElementById("costoDeEnvio").innerHTML = costoEnvio;
+    document.getElementById("totalCarrito").innerHTML = subtotalCarrito+costoEnvio;
+}
 
 function upDatePrecio(cant,precio,indice){
     let precioFinal = cant*precio;
@@ -13,8 +35,14 @@ function upDatePrecio(cant,precio,indice){
     for (i=0;i<arrayCarrito.length; i++){
         subtotalCarrito += arrayCarrito[i].count*arrayCarrito[i].unitCost;
     }
+
+    upDateEnvio()
+    
+
+    
     document.getElementById("subtotal").innerHTML = subtotalCarrito;
-    document.getElementById("totalCarrito").innerHTML = subtotalCarrito; //+costo de envio (PROX ENTREGA)
+    // document.getElementById("costoDeEnvio").innerHTML = costoEnvio;
+    document.getElementById("totalCarrito").innerHTML = subtotalCarrito+costoEnvio;
     
 }
 
@@ -59,14 +87,93 @@ function mostrarCarrito(array){
         </div>`
 
         subtotalCarrito += producto.count*producto.unitCost;
-        totalCarrito = subtotalCarrito; //+ costo de envio (PROX ENTREGA)
-
+        upDateEnvio();
+        totalCarrito = subtotalCarrito + costoEnvio;
+        
         
     }
     
     document.getElementById("prodCarrito").innerHTML=carrito;
     document.getElementById("subtotal").innerHTML=subtotalCarrito;
     document.getElementById("totalCarrito").innerHTML=totalCarrito;
+
+}
+
+function validarCampos(){
+    let direccionCalle = document.getElementById('direccionCalle');
+    let direccionNumero = document.getElementById('direccionNumero');
+    let direccionEsquina = document.getElementById('direccionEsquina');
+    let pais = document.getElementById('pais');
+    let tipoEnvio = document.getElementsByName('envioType');
+    let tipoEnvioValido = false;
+    let opcPago = document.getElementsByName('pagoType');
+
+    let tcNombreTitular = document.getElementById('nombreTitularTC');
+    let tcNoTarjeta = document.getElementById('noTarjeta');
+    let tcCVV = document.getElementById('cvv');
+    let tcVenc = document.getElementById('venc');
+    let tbNombreTitular = document.getElementById('nombreTitularTB');
+    let tbNoCuenta = document.getElementById('noCuenta');
+    let tbSucursal = document.getElementById('suc');
+    let tcredito = [tcNombreTitular.value, tcNoTarjeta.value, tcCVV.value, tcVenc.value];
+    let tb = [tbNombreTitular.value, tbNoCuenta.value, tbSucursal.value]
+    let opcPagoValido = false;
+    let camposValidos = 0;
+
+    for (let i = 0; i < tipoEnvio.length; i++) {
+        if(tipoEnvio[i].checked){
+            tipoEnvioValido = true;
+        }    
+    }
+
+    for (let i = 0; i < opcPago.length; i++) {
+        if(opcPago[i].checked){
+            let tcValido = 0;
+            let tbValido = 0;
+
+            for(i=0; i < tcredito.length; i++){
+                if(tcredito[i]!=""){
+                    tcValido +=1;
+                }
+            }
+            if(tcValido == tcredito.length){
+                opcPagoValido = true;
+            }
+
+            for(i=0; i<tb.length; i++){
+                if(tb[i]!=""){
+                    tbValido +=1;
+                }
+            }
+            if(tbValido == tb.length){
+                opcPagoValido = true;
+            }
+            
+        }    
+    }
+
+    let campos=[direccionCalle.value, direccionNumero.value, direccionEsquina.value, pais.value, tipoEnvioValido, opcPagoValido];
+    console.log(campos);
+
+    for(i=0; i < campos.length; i++){
+        if(campos[i]!='' || campos[i]==true){
+            camposValidos += 1; 
+        }
+    }
+    console.log(camposValidos);
+    if(camposValidos == campos.length){
+        swal("Compra realizada con éxito", "Pronto recibiras la información en tu correo", "success")
+        .then((value) => {
+            window.location.href=PRODUCT_PAGE;
+        });
+        
+    }
+    else{
+        swal("Debe completar todos los campos", "Revise los campos en rojo","warning");
+    }
+    
+    
+
 }
 
 
@@ -81,22 +188,5 @@ document.addEventListener("DOMContentLoaded", function(e){
     });
 });
 
-(function () {
-    'use strict'
-  
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.querySelectorAll('.needs-validation')
-  
-    // Loop over them and prevent submission
-    Array.prototype.slice.call(forms)
-      .forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
-  
-          form.classList.add('was-validated')
-        }, false)
-      })
-  })()
+
+//funcion validacion BOOTSTRAP
