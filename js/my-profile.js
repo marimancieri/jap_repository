@@ -33,6 +33,8 @@ function mostrarImagen(){
     reader.onloadend = function () { 
         preview.src = reader.result; 
         document.getElementById("imgUsuario2").innerHTML = reader.result; 
+        document.getElementById("imgMenu").src = reader.result; 
+       
     };
 
     if (file) {

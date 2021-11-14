@@ -1,6 +1,7 @@
 let subtotalCarrito = 0;
 let totalCarrito = 0;
 let costoEnvio = 0;
+let arrayCarrito = []
 
 PRODUCT_PAGE = "products.html";
 
@@ -41,7 +42,7 @@ function upDatePrecio(cant,precio,indice){
 
     
     document.getElementById("subtotal").innerHTML = subtotalCarrito;
-    // document.getElementById("costoDeEnvio").innerHTML = costoEnvio;
+    document.getElementById("costoDeEnvio").innerHTML = costoEnvio;
     document.getElementById("totalCarrito").innerHTML = subtotalCarrito+costoEnvio;
     
 }
@@ -49,6 +50,9 @@ function upDatePrecio(cant,precio,indice){
 
 function mostrarCarrito(array){
     let carrito = "";
+    subtotalCarrito = 0;
+    totalCarrito = 0;
+    costoEnvio = 0;
 
     for (i=0;i<array.length; i++){
         let producto = array[i];
@@ -57,7 +61,7 @@ function mostrarCarrito(array){
         }
 
         carrito += `
-        <div class="row">
+        <div class="row" >
             <div class="col-3">
                 <img src="` + producto.src + `" alt="` + producto.name + `" class="img-thumbnail">
             </div>
@@ -73,16 +77,18 @@ function mostrarCarrito(array){
                         <h4>UYU `+ producto.unitCost +`</h4>
                     </div>
                     <div class="col">
-                    <small class="text-muted">Cantidad: </small>
-                    <input type="number" class="form-control" min="0" id="cantidad`+i+`" 
+                        <small class="text-muted">Cantidad: </small>
+                        <input type="number" class="form-control" min="0" id="cantidad`+i+`" 
                         value="`+producto.count+`" onChange="upDatePrecio(this.value,`+producto.unitCost+`,`+i+`)">
-                </div>
-                
+                    </div>
                     <div class="col">
                         <small class="text-muted">Total producto: </small>
                         <h4  id="totalProd`+i+`">`+producto.count*producto.unitCost+`</h4>
                     </div>
                 </div>
+            </div>
+            <div class="col-1">
+            <button class="btn btn-light" onclick="borrarElemento(`+i+`)"><i class="fas fa-trash"></i></button>
             </div>
         </div>`
 
@@ -92,14 +98,29 @@ function mostrarCarrito(array){
         
         
     }
+
+    if(array.length ==0){
+        carrito += `
+        <div class="row" >
+
+                <h1 > ¡Hay un carrito que llenar!</h1>
+            
+        </div>
+        `
+        subtotalCarrito = 0;
+        costoEnvio = 0;
+        totalCarrito = 0;
+    }
     
     document.getElementById("prodCarrito").innerHTML=carrito;
     document.getElementById("subtotal").innerHTML=subtotalCarrito;
+    document.getElementById("costoDeEnvio").innerHTML = costoEnvio;
     document.getElementById("totalCarrito").innerHTML=totalCarrito;
 
 }
 
 function validarCampos(){
+    let elementosEnCarrito= false;
     let direccionCalle = document.getElementById('direccionCalle');
     let direccionNumero = document.getElementById('direccionNumero');
     let direccionEsquina = document.getElementById('direccionEsquina');
@@ -118,7 +139,12 @@ function validarCampos(){
     let tcredito = [tcNombreTitular.value, tcNoTarjeta.value, tcCVV.value, tcVenc.value];
     let tb = [tbNombreTitular.value, tbNoCuenta.value, tbSucursal.value]
     let opcPagoValido = false;
+
     let camposValidos = 0;
+
+    if(arrayCarrito.length != 0){
+        elementosEnCarrito = true;
+    }
 
     for (let i = 0; i < tipoEnvio.length; i++) {
         if(tipoEnvio[i].checked){
@@ -152,7 +178,7 @@ function validarCampos(){
         }    
     }
 
-    let campos=[direccionCalle.value, direccionNumero.value, direccionEsquina.value, pais.value, tipoEnvioValido, opcPagoValido];
+    let campos=[elementosEnCarrito, direccionCalle.value, direccionNumero.value, direccionEsquina.value, pais.value, tipoEnvioValido, opcPagoValido];
     console.log(campos);
 
     for(i=0; i < campos.length; i++){
@@ -176,6 +202,10 @@ function validarCampos(){
 
 }
 
+function borrarElemento(index){
+    arrayCarrito.splice(index,1);
+    mostrarCarrito(arrayCarrito);
+}
 
 
 document.addEventListener("DOMContentLoaded", function(e){
